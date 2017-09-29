@@ -3408,9 +3408,16 @@ int dsi_ctrl_cmd_transfer(struct dsi_ctrl *dsi_ctrl,
 
 	if (*flags & DSI_CTRL_CMD_READ) {
 		rc = dsi_message_rx(dsi_ctrl, msg, flags);
+<<<<<<< HEAD
 		if (rc <= 0)
 			DSI_CTRL_ERR(dsi_ctrl, "read message failed read length, rc=%d\n",
 					rc);
+=======
+		if (rc < 0)
+			pr_err("read message failed read, rc=%d\n", rc);
+		else if (rc == 0)
+			pr_warn("empty message back\n");
+>>>>>>> a17b8465... drm/msm: allow reads through drm_mipi_dsi
 	} else {
 		rc = dsi_message_tx(dsi_ctrl, msg, flags);
 		if (rc)
