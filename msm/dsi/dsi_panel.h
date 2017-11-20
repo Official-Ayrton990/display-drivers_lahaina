@@ -121,10 +121,10 @@ struct dsi_backlight_config {
 	u32 bl_min_level;
 	u32 bl_max_level;
 	u32 brightness_max_level;
-	u32 bl_level;
 	u32 bl_scale;
 	u32 bl_scale_sv;
 	bool bl_inverted_dbv;
+	u32 bl_actual;
 
 	int en_gpio;
 	/* PWM params */
@@ -134,7 +134,7 @@ struct dsi_backlight_config {
 
 	/* WLED params */
 	struct led_trigger *wled;
-	struct backlight_device *raw_bd;
+	struct backlight_device *bl_device;
 
 	/* DCS params */
 	bool lp_mode;
@@ -408,4 +408,7 @@ int dsi_panel_create_cmd_packets(const char *data, u32 length, u32 count,
 void dsi_panel_destroy_cmd_packets(struct dsi_panel_cmd_set *set);
 
 void dsi_panel_dealloc_cmd_packets(struct dsi_panel_cmd_set *set);
+
+int dsi_backlight_register(struct dsi_backlight_config *bl);
+
 #endif /* _DSI_PANEL_H_ */
