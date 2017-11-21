@@ -411,4 +411,6 @@ void dsi_panel_dealloc_cmd_packets(struct dsi_panel_cmd_set *set);
 
 int dsi_backlight_register(struct dsi_backlight_config *bl);
 
+int dsi_backlight_update_dpms(struct dsi_backlight_config *bl, int power_state);
+
 #endif /* _DSI_PANEL_H_ */
