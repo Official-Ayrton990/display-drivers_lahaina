@@ -1204,18 +1204,11 @@ int dsi_display_set_power(struct drm_connector *connector,
 		if (dsi_display_set_ulp_load(display, true) < 0)
 			DSI_WARN("failed to set load for lp2 state\n");
 		break;
-	case SDE_MODE_DPMS_ON:
-		if (display->panel->power_mode == SDE_MODE_DPMS_LP2) {
-			if (dsi_display_set_ulp_load(display, false) < 0)
-				DSI_WARN("failed to set load for on state\n");
-		}
-		if ((display->panel->power_mode == SDE_MODE_DPMS_LP1) ||
-			(display->panel->power_mode == SDE_MODE_DPMS_LP2))
-			rc = dsi_panel_set_nolp(display->panel);
-		break;
 	case SDE_MODE_DPMS_OFF:
+		/* nothing to do */
+		break;
 	default:
-		return rc;
+		return dsi_panel_set_nolp(display->panel);
 	}
 
 	SDE_EVT32(display->panel->power_mode, power_mode, rc);
