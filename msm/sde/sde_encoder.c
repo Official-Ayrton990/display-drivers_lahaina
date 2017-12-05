@@ -1698,6 +1698,8 @@ static int _sde_encoder_rc_kickoff(struct drm_encoder *drm_enc,
 {
 	int ret = 0;
 
+	msm_idle_set_state(drm_enc, true);
+
 	mutex_lock(&sde_enc->rc_lock);
 
 	/* return if the resource control is already in ON state */
@@ -1744,6 +1746,7 @@ end:
 		_sde_encoder_rc_kickoff_delayed(sde_enc, sw_event);
 
 	mutex_unlock(&sde_enc->rc_lock);
+	msm_idle_set_state(drm_enc, false);
 	return ret;
 }
 
