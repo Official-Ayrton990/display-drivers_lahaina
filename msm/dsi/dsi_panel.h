@@ -245,6 +245,19 @@ struct dsi_panel_ops {
 	int (*parse_power_cfg)(struct dsi_panel *panel);
 };
 
+struct dsi_panel_sn_location {
+	u32 start_byte;
+	u32 sn_length;
+	u8 addr;
+};
+
+struct dsi_panel_vendor_info {
+	struct dsi_panel_sn_location location;
+	bool is_sn;
+	u8 *sn;
+	const char *name;
+};
+
 struct dsi_panel {
 	const char *name;
 	const char *type;
@@ -280,6 +293,7 @@ struct dsi_panel {
 	struct dsi_panel_debug debug;
 
 	struct dsi_parser_utils utils;
+	struct dsi_panel_vendor_info vendor_info;
 
 	u32 init_delay_us;
 	bool lp11_init;
@@ -471,5 +485,7 @@ int dsi_panel_bl_parse_config(struct device *parent,
 /* Set/get high brightness mode */
 int dsi_panel_update_hbm(struct dsi_panel *panel, bool enable);
 bool dsi_panel_get_hbm(struct dsi_panel *panel);
+
+int dsi_panel_get_sn(struct dsi_panel *panel);
 
 #endif /* _DSI_PANEL_H_ */
