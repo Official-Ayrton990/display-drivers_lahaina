@@ -422,6 +422,12 @@ void dsi_panel_destroy_cmd_packets(struct dsi_panel_cmd_set *set);
 void dsi_panel_dealloc_cmd_packets(struct dsi_panel_cmd_set *set);
 
 int dsi_backlight_register(struct dsi_backlight_config *bl);
+int dsi_panel_cmd_set_transfer(struct dsi_panel *panel,
+			       struct dsi_panel_cmd_set *cmd);
+int dsi_panel_parse_dt_cmd_set(struct device_node *of_node,
+			       const char *cmd_str,
+			       const char *cmd_state_str,
+			       struct dsi_panel_cmd_set *cmd);
 
 int dsi_backlight_early_dpms(struct dsi_backlight_config *bl, int power_state);
 int dsi_backlight_late_dpms(struct dsi_backlight_config *bl, int power_state);
