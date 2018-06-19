@@ -4368,7 +4368,7 @@ static int dsi_panel_update_hbm_locked(struct dsi_panel *panel,
 	struct dsi_backlight_config *bl = &panel->bl_config;
 	int rc = 0;
 
-	if (!bl->bl_hbm_supported || (panel->hbm_mode == enable))
+	if (panel->hbm_mode == enable)
 		return 0;
 
 	if (dsi_backlight_get_dpms(bl) != SDE_MODE_DPMS_ON) {
@@ -4385,8 +4385,6 @@ static int dsi_panel_update_hbm_locked(struct dsi_panel *panel,
 		return rc;
 	}
 
-	bl->bl_active_params = enable ? &bl->bl_hbm_params :
-		&bl->bl_normal_params;
 	panel->hbm_mode = enable;
 
 	return 0;
@@ -4399,7 +4397,7 @@ int dsi_panel_update_hbm(struct dsi_panel *panel, bool enable)
 	if (!panel)
 		return -EINVAL;
 
-	if (!panel->bl_config.bl_hbm_supported)
+	if (!panel->bl_config.hbm)
 		return 0;
 
 	mutex_lock(&panel->panel_lock);
