@@ -127,9 +127,11 @@ struct dsi_backlight_config {
 	u32 bl_actual;
 	bool bl_update_pending;
 	bool allow_bl_update;
+	unsigned int last_state;
 
 	int en_gpio;
 	struct backlight_device *bl_device;
+	struct regulator *lab_vreg;
 
 	/* DCS params */
 	bool lp_mode;
@@ -421,7 +423,8 @@ void dsi_panel_dealloc_cmd_packets(struct dsi_panel_cmd_set *set);
 
 int dsi_backlight_register(struct dsi_backlight_config *bl);
 
-int dsi_backlight_update_dpms(struct dsi_backlight_config *bl, int power_state);
+int dsi_backlight_early_dpms(struct dsi_backlight_config *bl, int power_state);
+int dsi_backlight_late_dpms(struct dsi_backlight_config *bl, int power_state);
 
 int dsi_panel_bl_register(struct dsi_panel *panel);
 int dsi_panel_bl_unregister(struct dsi_panel *panel);
