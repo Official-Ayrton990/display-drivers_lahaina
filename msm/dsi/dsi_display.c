@@ -5420,9 +5420,6 @@ int dsi_display_cont_splash_config(void *dsi_display)
 
 	mutex_unlock(&display->display_lock);
 
-	/* Set the current brightness level */
-	dsi_panel_bl_handoff(display->panel);
-
 	return rc;
 
 clk_manager_update:
